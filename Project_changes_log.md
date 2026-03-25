@@ -1,6 +1,6 @@
-## VPP-Orchestrate: Project Change Log
+# VPP-Orchestrate: Project Change Log
 
-# Status: Analytics Layer Operational
+## Status: Analytics Layer Operational
 
 * Change 1: Billing Logic Refinement
 
