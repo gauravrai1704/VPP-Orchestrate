@@ -27,37 +27,72 @@ ALTER TABLE Energy_Transaction AUTO_INCREMENT = 1;
 ALTER TABLE Grid_Event         AUTO_INCREMENT = 1;
 
 -- ============================================================
--- 1. GRID NODES  (5 nodes)
+-- 1. GRID NODES  (5 nodes) — with spatial coordinates
 -- ============================================================
 INSERT INTO Grid_Node
-    (node_name, node_type, max_load_mw, current_load_mw, node_status)
+    (node_name, node_type, location, max_load_mw, current_load_mw, node_status)
 VALUES
-    ('Node Alpha',    'SUBSTATION',   150.0,  82.5, 'NORMAL'),
-    ('Node Beta',     'SUBSTATION',   120.0,  95.4, 'STRESSED'),
-    ('Node East',     'TRANSFORMER',   40.0,  12.0, 'NORMAL'),
-    ('Node West',     'TRANSFORMER',   40.0,  38.0, 'NORMAL'),
-    ('Node South',    'DISTRIBUTION',  20.0,   5.0, 'NORMAL');
+    ('Node Alpha',  'SUBSTATION',
+     ST_SRID(ST_GeomFromText('POINT(-0.1278 51.5074)'), 4326),  -- London
+     150.0,  82.5, 'NORMAL'),
+
+    ('Node Beta',   'SUBSTATION',
+     ST_SRID(ST_GeomFromText('POINT(-0.0900 51.5150)'), 4326),
+     120.0,  95.4, 'STRESSED'),
+
+    ('Node East',   'TRANSFORMER',
+     ST_SRID(ST_GeomFromText('POINT(-0.0500 51.5200)'), 4326),
+      40.0,  12.0, 'NORMAL'),
+
+    ('Node West',   'TRANSFORMER',
+     ST_SRID(ST_GeomFromText('POINT(-0.1600 51.5100)'), 4326),
+      40.0,  38.0, 'NORMAL'),
+
+    ('Node South',  'DISTRIBUTION',
+     ST_SRID(ST_GeomFromText('POINT(-0.1100 51.4900)'), 4326),
+      20.0,   5.0, 'NORMAL');
+
 
 -- ============================================================
--- 2. ENERGY ASSETS  (10 assets)
+-- 2. ENERGY ASSETS  (10 assets) — with spatial coordinates
 -- ============================================================
 INSERT INTO Energy_Asset
-    (asset_type, manufacturer, model_number, installation_date, grid_node_id, asset_status)
+    (asset_type, manufacturer, model_number, installation_date,
+     asset_location, grid_node_id, asset_status)
 VALUES
 -- Solar panels (asset_id 1, 2, 3)
-    ('SOLAR',   'SunPower',  'SP-440',  '2022-03-15', 1, 'ACTIVE'),
-    ('SOLAR',   'LG Solar',  'LG-400',  '2023-01-20', 2, 'ACTIVE'),
-    ('SOLAR',   'Panasonic', 'PAN-400', '2021-07-11', 3, 'ACTIVE'),
+    ('SOLAR',   'SunPower',  'SP-440',  '2022-03-15',
+     ST_SRID(ST_GeomFromText('POINT(-0.1270 51.5080)'), 4326), 1, 'ACTIVE'),
+
+    ('SOLAR',   'LG Solar',  'LG-400',  '2023-01-20',
+     ST_SRID(ST_GeomFromText('POINT(-0.0910 51.5160)'), 4326), 2, 'ACTIVE'),
+
+    ('SOLAR',   'Panasonic', 'PAN-400', '2021-07-11',
+     ST_SRID(ST_GeomFromText('POINT(-0.0510 51.5210)'), 4326), 3, 'ACTIVE'),
+
 -- Wind turbines (asset_id 4, 5)
-    ('WIND',    'Vestas',    'V150',    '2020-05-01', 4, 'ACTIVE'),
-    ('WIND',    'Siemens',   'SG-132',  '2021-09-30', 5, 'ACTIVE'),
+    ('WIND',    'Vestas',    'V150',    '2020-05-01',
+     ST_SRID(ST_GeomFromText('POINT(-0.1610 51.5110)'), 4326), 4, 'ACTIVE'),
+
+    ('WIND',    'Siemens',   'SG-132',  '2021-09-30',
+     ST_SRID(ST_GeomFromText('POINT(-0.1100 51.4910)'), 4326), 5, 'ACTIVE'),
+
 -- Batteries (asset_id 6, 7, 8)
-    ('BATTERY', 'Tesla',     'Mega-2',  '2023-06-01', 1, 'ACTIVE'),
-    ('BATTERY', 'CATL',      'Ener-1',  '2023-08-15', 2, 'IDLE'),
-    ('BATTERY', 'BYD',       'Box-HVS', '2022-11-20', 3, 'ACTIVE'),
+    ('BATTERY', 'Tesla',     'Mega-2',  '2023-06-01',
+     ST_SRID(ST_GeomFromText('POINT(-0.1280 51.5074)'), 4326), 1, 'ACTIVE'),
+
+    ('BATTERY', 'CATL',      'Ener-1',  '2023-08-15',
+     ST_SRID(ST_GeomFromText('POINT(-0.0920 51.5155)'), 4326), 2, 'IDLE'),
+
+    ('BATTERY', 'BYD',       'Box-HVS', '2022-11-20',
+     ST_SRID(ST_GeomFromText('POINT(-0.0520 51.5205)'), 4326), 3, 'ACTIVE'),
+
 -- Inverters (asset_id 9, 10)
-    ('INVERTER','SMA',       'Tri-25',  '2022-03-15', 1, 'ACTIVE'),
-    ('INVERTER','Fronius',   'Symo-15', '2023-01-20', 2, 'ACTIVE');
+    ('INVERTER','SMA',       'Tri-25',  '2022-03-15',
+     ST_SRID(ST_GeomFromText('POINT(-0.1275 51.5078)'), 4326), 1, 'ACTIVE'),
+
+    ('INVERTER','Fronius',   'Symo-15', '2023-01-20',
+     ST_SRID(ST_GeomFromText('POINT(-0.0905 51.5158)'), 4326), 2, 'ACTIVE');
 
 -- ============================================================
 -- 3. GENERATION ASSETS  (solar + wind subtypes)
