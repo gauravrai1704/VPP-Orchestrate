@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #F9FAFB;
+    color: #064E3B;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F9FAFB;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #D1FAE5;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #10B981;
+  }
+}
+
+@layer components {
+  .stat-value {
+    @apply font-light text-2xl tracking-tight text-vpp-forest;
+  }
+  .stat-label {
+    @apply text-xs font-normal tracking-widest uppercase text-vpp-dim;
+  }
+  .card {
+    @apply bg-white border border-vpp-border rounded-lg;
+  }
+  .btn-primary {
+    @apply bg-vpp-green text-white font-bold tracking-tight text-sm
+           px-4 py-2 rounded hover:bg-emerald-600 transition-colors duration-150;
+  }
+  .btn-ghost {
+    @apply text-vpp-forest border border-vpp-border font-bold tracking-tight text-sm
+           px-4 py-2 rounded hover:bg-vpp-gray transition-colors duration-150;
+  }
+  .badge-active {
+    @apply inline-flex items-center gap-1 text-xs font-bold tracking-widest
+           text-vpp-green bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded;
+  }
+  .badge-idle {
+    @apply inline-flex items-center gap-1 text-xs font-bold tracking-widest
+           text-vpp-dim bg-gray-100 border border-gray-200 px-2 py-0.5 rounded;
+  }
+  .badge-fault {
+    @apply inline-flex items-center gap-1 text-xs font-bold tracking-widest
+           text-vpp-danger bg-red-50 border border-red-200 px-2 py-0.5 rounded;
+  }
+  .badge-warn {
+    @apply inline-flex items-center gap-1 text-xs font-bold tracking-widest
+           text-vpp-warn bg-amber-50 border border-amber-200 px-2 py-0.5 rounded;
+  }
+}
+
+/* Pulsing dot animation */
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+.live-dot {
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+/* Number tick animation */
+@keyframes numTick {
+  0%   { transform: translateY(-4px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+.num-tick {
+  animation: numTick 0.2s ease-out;
+}
